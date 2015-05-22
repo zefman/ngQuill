@@ -72,7 +72,8 @@
     app.directive("ngQuillEditor", [
         '$timeout',
         'ngQuillService',
-        function ($timeout, ngQuillService) {
+        '$window',
+        function ($timeout, ngQuillService, $window) {
             return {
                 scope: {
                     'toolbarEntries': '@?',
@@ -231,7 +232,7 @@
         '$rootScope',
         '$window',
         function ($templateCache, $rootScope, $window) {
-            
+
             // put template in template cache
             return $templateCache.put('ngQuill/template.html',
                 '<div id="content-container">' +
