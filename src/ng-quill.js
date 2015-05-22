@@ -182,7 +182,7 @@
 
                     // provide event to get recognized when editor is created -> pass editor object.
                     $timeout(function(){
-                       $scope.$emit('editorCreated', editor); 
+                       $scope.$emit('editorCreated', editor);
                     });
 
                     // set initial value
@@ -212,6 +212,15 @@
                             ngModel.$setViewValue(editor.getHTML());
                         }, 0);
                     });
+
+                    // Destroy the quill instances on destroy
+                    $scope.$on( '$destroy', function() {
+                        if ($window.Quill && $window.Quill.editors && $window.Quill.editors.length) {
+                            angular.forEach($window.Quill.editors, function (editor) {
+                                editor.destroy();
+                            });
+                        }
+                    } );
                 }
             };
         }
@@ -222,16 +231,7 @@
         '$rootScope',
         '$window',
         function ($templateCache, $rootScope, $window) {
-
-            // reset all quill editors (to not flood window object works only with ui-router)
-            $rootScope.$on('$locationChangeSuccess', function () {
-                if ($window.Quill && $window.Quill.editors && $window.Quill.editors.length) {
-                    angular.forEach($window.Quill.editors, function (editor) {
-                        editor.destroy();
-                    });
-                }
-            });
-
+            
             // put template in template cache
             return $templateCache.put('ngQuill/template.html',
                 '<div id="content-container">' +
