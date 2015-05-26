@@ -88,7 +88,7 @@
                     'ngModel': '='
                 },
                 require: 'ngModel',
-                restrict: 'E',
+                restrict: 'EA',
                 templateUrl: 'ngQuill/template.html',
                 link: function ($scope, element, attr, ngModel) {
                     var config = {
